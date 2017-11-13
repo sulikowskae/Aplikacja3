@@ -1,30 +1,37 @@
 package sample;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 
 public class Controller {
 
     public TextField textfield;
-    List<String> lista = new ArrayList<String>();
+    public TableView<String> table;
 
 
     public void click(ActionEvent actionEvent) {
 
-            lista.add(textfield.getText());
-            ObservableList<String> string = FXCollections.observableArrayList(lista);
+        table.getItems().add(textfield.getText());
 
-            TableView tableview = new TableView<>(string);
+    }
 
-            //System.out.print(tableview.getItems());
+    public void initialize() {
+        TableColumn<String, String> wyraz = (TableColumn<String, String>) table.getColumns().get(0);
+        if (wyraz.getCellValueFactory() == null) {
+            wyraz.setCellValueFactory((param -> new SimpleStringProperty(param.getValue())));
+
 
         }
 
+    }
 }
+
+
